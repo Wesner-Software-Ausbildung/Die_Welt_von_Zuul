@@ -16,11 +16,13 @@ package de.szut.zuul;
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room upExit;
+    private Room downExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -33,6 +35,54 @@ public class Room
         this.description = description;
     }
 
+    public Room getExit(String direction) {
+        Room room = null;
+        switch (direction) {
+            case "north":
+                room = northExit;
+                break;
+            case "east":
+                room = eastExit;
+                break;
+            case "west":
+                room = westExit;
+                break;
+            case "south":
+                room = southExit;
+                break;
+            case "up":
+                room = upExit;
+                break;
+            case "down":
+                room = downExit;
+                break;
+        }
+        return room;
+    }
+
+    public String exitsToString() {
+        StringBuilder exits = new StringBuilder("");
+        if (northExit != null) {
+            exits.append("north ");
+        }
+        if (eastExit != null) {
+            exits.append("east ");
+        }
+        if (southExit != null) {
+            exits.append("south ");
+        }
+        if (westExit != null) {
+            exits.append("west ");
+        }
+        if (upExit != null) {
+            exits.append("up ");
+        }
+        if (downExit != null) {
+            exits.append("down ");
+        }
+
+        return  exits.toString().trim();
+    }
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
@@ -41,7 +91,7 @@ public class Room
      * @param south The south exit.
      * @param west The west exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west) 
+    public void setExits(Room north, Room east, Room south, Room west, Room up, Room down)
     {
         if(north != null) {
             northExit = north;
@@ -54,6 +104,12 @@ public class Room
         }
         if(west != null) {
             westExit = west;
+        }
+        if (up != null) {
+            upExit = up;
+        }
+        if (down != null) {
+            downExit = down;
         }
     }
 
