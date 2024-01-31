@@ -1,4 +1,5 @@
 package de.szut.zuul;
+import java.util.HashMap;
 
 /**
  * Class Room - a room in an adventure game.
@@ -17,12 +18,9 @@ package de.szut.zuul;
 public class Room 
 {
     private String description;
-    private Room northExit;
-    private Room southExit;
-    private Room eastExit;
-    private Room westExit;
-    private Room upExit;
-    private Room downExit;
+
+    // Für die 3 Teil habe ich HashMap in die Klasse "Room" erstellt. Danach soll ich die "Methode" - "getExit" und "exitsToString" ändern.
+    private HashMap<String, Room> exits;
 
     /**
      * Create a room described "description". Initially, it has
@@ -30,87 +28,55 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
+
+    // Für die 3 Teil habe ich den Konstruktor geändert. Er soll jetzt HashMap nutzen.
     public Room(String description) 
     {
         this.description = description;
+        this.exits = new HashMap<String, Room>();
     }
 
+    //Ich habe diese Methode erstellt, weil die Attribute in dieser Klasse jetzt "Private" sind. (2 Aufgabe, 1 Schritt)
     public Room getExit(String direction) {
-        Room room = null;
-        switch (direction) {
-            case "north":
-                room = northExit;
-                break;
-            case "east":
-                room = eastExit;
-                break;
-            case "west":
-                room = westExit;
-                break;
-            case "south":
-                room = southExit;
-                break;
-            case "up":
-                room = upExit;
-                break;
-            case "down":
-                room = downExit;
-                break;
-        }
-        return room;
+        return exits.get(direction);
     }
 
+    //Ich habe diese Methode erstellt, weil die Attribute in dieser Klasse jetzt "Private" sind. (2 Aufgabe, 2 Schritt.)
+    //Zum dritten Schritt sollte ich die Methode "exitsToString" ändern.
     public String exitsToString() {
         StringBuilder exits = new StringBuilder("");
-        if (northExit != null) {
+        if(getExit("north") != null)
             exits.append("north ");
-        }
-        if (eastExit != null) {
-            exits.append("east ");
-        }
-        if (southExit != null) {
+        if(getExit("south ") != null)
             exits.append("south ");
-        }
-        if (westExit != null) {
+        if(getExit("east") != null)
+            exits.append("east ");
+        if(getExit("west") != null)
             exits.append("west ");
-        }
-        if (upExit != null) {
+        if(getExit("up") != null)
             exits.append("up ");
-        }
-        if (downExit != null) {
+        if(getExit("down") != null)
             exits.append("down ");
-        }
 
-        return  exits.toString().trim();
+        return exits.toString();
     }
+
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
      * @param north The north exit.
-     * @param east The east east.
+     * @param east The east exit.
      * @param south The south exit.
      * @param west The west exit.
+     * @param up The up exit.
+     * @param down The down exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room up, Room down)
-    {
-        if(north != null) {
-            northExit = north;
-        }
-        if(east != null) {
-            eastExit = east;
-        }
-        if(south != null) {
-            southExit = south;
-        }
-        if(west != null) {
-            westExit = west;
-        }
-        if (up != null) {
-            upExit = up;
-        }
-        if (down != null) {
-            downExit = down;
-        }
+
+    //Ich habe diese Methode ergänzt, weil ich hier ein paar neue Richtungen erstellen wollte (1 Aufgabe)
+    //Zum dritten Schritt sollte ich die Methode "setExits" zum "setExit" umwandeln.
+
+    public void setExit(String direction, Room neighbour) {
+        this.exits.put(direction, neighbour);
     }
 
     /**

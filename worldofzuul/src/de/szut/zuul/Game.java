@@ -53,7 +53,7 @@ public class Game
         wizardsRoom = new Room("in a wizard's room");
 
         // initialise room exits
-        marketsquare.setExits(tavern, templePyramid, null, sacrificialSite, null, null);
+/*      marketsquare.setExits(tavern, templePyramid, null, sacrificialSite, null, null);
         templePyramid.setExits(null, wizardsRoom, null, marketsquare, hut, cellar);
         tavern.setExits(null, hut, marketsquare, null, null, null);
         sacrificialSite.setExits(null, marketsquare, null, null, null, cave);
@@ -64,7 +64,85 @@ public class Game
         beach.setExits(cave, null, null, null, null, null);
         //Ich habe hier Richtungen erstellt.
         cellar.setExits(null, null, null, secretPassage, templePyramid, null);
-        wizardsRoom.setExits(null, null, null, null, null, templePyramid);
+        wizardsRoom.setExits(null, null, null, null, null, templePyramid);*/
+
+        // Für dritte Teil sollte ich Aufruf der Methode "setExist" auf "setExit" ändern, weil die erste Methode nicht meer funktioniert.
+        marketsquare.setExit("north", tavern);
+        marketsquare.setExit("east", templePyramid);
+        marketsquare.setExit("south", null);
+        marketsquare.setExit("west", sacrificialSite);
+        marketsquare.setExit("up", null);
+        marketsquare.setExit("down", null);
+
+        templePyramid.setExit("north", hut);
+        templePyramid.setExit("east", null);
+        templePyramid.setExit("south", null);
+        templePyramid.setExit("west", marketsquare);
+        templePyramid.setExit("up", wizardsRoom);
+        templePyramid.setExit("down", cellar);
+
+        tavern.setExit("north", null);
+        tavern.setExit("east", hut);
+        tavern.setExit("south", marketsquare);
+        tavern.setExit("west", null);
+        tavern.setExit("up", null);
+        tavern.setExit("down", null);
+
+        sacrificialSite.setExit("north", null);
+        sacrificialSite.setExit("east", marketsquare);
+        sacrificialSite.setExit("south", null);
+        sacrificialSite.setExit("west", null);
+        sacrificialSite.setExit("up", null);
+        sacrificialSite.setExit("down", cave);
+
+        hut.setExit("north", null);
+        hut.setExit("east", jungle);
+        hut.setExit("south", templePyramid);
+        hut.setExit("west", tavern);
+        hut.setExit("up", null);
+        hut.setExit("down", null);
+
+        jungle.setExit("north", null);
+        jungle.setExit("east", null);
+        jungle.setExit("south", null);
+        jungle.setExit("west", hut);
+        jungle.setExit("up", null);
+        jungle.setExit("down", null);
+
+        secretPassage.setExit("north", null);
+        secretPassage.setExit("east", cellar);
+        secretPassage.setExit("south", null);
+        secretPassage.setExit("west", cave);
+        secretPassage.setExit("up", null);
+        secretPassage.setExit("down", null);
+
+        cave.setExit("north", null);
+        cave.setExit("east", secretPassage);
+        cave.setExit("south", beach);
+        cave.setExit("west", null);
+        cave.setExit("up", sacrificialSite);
+        cave.setExit("down", null);
+
+        beach.setExit("north", cave);
+        beach.setExit("east", null);
+        beach.setExit("south", null);
+        beach.setExit("west", null);
+        beach.setExit("up", null);
+        beach.setExit("down", null);
+
+        cellar.setExit("north", null);
+        cellar.setExit("east", null);
+        cellar.setExit("south", null);
+        cellar.setExit("west", secretPassage);
+        cellar.setExit("up", templePyramid);
+        cellar.setExit("down", null);
+
+        wizardsRoom.setExit("north", null);
+        wizardsRoom.setExit("east", null);
+        wizardsRoom.setExit("south", null);
+        wizardsRoom.setExit("west", null);
+        wizardsRoom.setExit("up", null);
+        wizardsRoom.setExit("down", templePyramid);
 
         currentRoom = marketsquare;  // start game on marketsquare
     }
