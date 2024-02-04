@@ -247,11 +247,9 @@ public class Game
             printRoomInformation();
         }
     }
-
+        //(Teil 4) Hier
     private void printRoomInformation() {
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: " + currentRoom.exitsToString());
-        System.out.println();
+        System.out.println (currentRoom.getLongDescription());
     }
 
     /** 

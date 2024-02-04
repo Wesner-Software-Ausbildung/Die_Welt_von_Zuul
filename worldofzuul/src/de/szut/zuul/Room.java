@@ -19,6 +19,7 @@ public class Room
 {
     private String description;
 
+
     // Für die 3 Teil habe ich HashMap in die Klasse "Room" erstellt. Danach soll ich die "Methode" - "getExit" und "exitsToString" ändern.
     private HashMap<String, Room> exits;
 
@@ -87,4 +88,8 @@ public class Room
         return description;
     }
 
+    //Hier habe ich die Methode "getLongDescription" erstellt, die mir die Beschreibung der Zimmer von der Klasse "Game" zurückgeben. (4 Schritt)
+    public String getLongDescription() {
+        return "You are " + description + "\nExits: " + exitsToString();
+    }
 }
