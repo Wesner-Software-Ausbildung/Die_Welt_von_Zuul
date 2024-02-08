@@ -64,4 +64,8 @@ public class Parser
             return new Command(null, word2); 
         }
     }
+    // Zur Aufgabe 5 sollte ich die Methode "showCommands" erstellen und Command "showAll" aufrufen.
+    public String showCommands() {
+        return commands.showAll();
+    }
 }

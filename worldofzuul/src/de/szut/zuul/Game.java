@@ -183,6 +183,9 @@ public class Game
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
+
+    // Für Teil 5 sollte ich das Command "look" hinzufügen, um der Beschreibung des Rooms noch mal ansehen zu können.
+    // Und einfach das neue Command zu sehen.
     private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
@@ -202,6 +205,9 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
+        else if (commandWord.equals("look")) {
+            look();
+        }
 
         return wantToQuit;
     }
@@ -213,13 +219,14 @@ public class Game
      * Here we print some stupid, cryptic message and a list of the 
      * command words.
      */
+    // Zur Aufgabe 5 sollte ich hier die Methode "showCommands" aufrufen.
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("through the jungle. At once there is a glade. On it there a buildings...");
+        System.out.println("through the jungle. At once there is a glade. You need to look around...");
         System.out.println();
         System.out.println("Your command words are:");
-        System.out.println("   go quit help");
+        System.out.println(parser.showCommands());
     }
 
     /** 
@@ -266,5 +273,10 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+
+    //In Teil 5 habe ich die Methode "look" geschrieben, um die "description" aus der Klasse Room aufzurufen.
+    private void look() {
+        System.out.println(currentRoom.getLongDescription());
     }
 }

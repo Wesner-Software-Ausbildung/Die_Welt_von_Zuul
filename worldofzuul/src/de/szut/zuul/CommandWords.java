@@ -15,7 +15,7 @@ public class CommandWords
 {
     // a constant array that holds all valid command words
     private static final String[] validCommands = {
-        "go", "quit", "help"
+        "go", "quit", "help", "look"
     };
 
     /**
@@ -39,5 +39,14 @@ public class CommandWords
         }
         // if we get here, the string was not found in the commands
         return false;
+    }
+    // Für Teil 5 habe ich die Methode "showAll" mit StringBuilder geschrieben, weil wir einige Probleme bei Command "help" hatten.
+    // Die neue Methode soll alle Commands sammeln und richtig uns zeigen.
+    public String showAll () {
+        StringBuilder showAlls = new StringBuilder("");
+        for (String command : validCommands) {
+            showAlls.append(command).append(" ");
+        }
+        return showAlls.toString().trim();
     }
 }
