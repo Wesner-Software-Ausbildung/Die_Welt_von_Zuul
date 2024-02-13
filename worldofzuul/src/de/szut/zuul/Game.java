@@ -52,6 +52,17 @@ public class Game
         cellar = new Room("in a cellar");
         wizardsRoom = new Room("in a wizard's room");
 
+        // Für Teil 6 habe ich für 8 Zimmer die Gegenstände mit 3 Parameter erstellt.
+        marketsquare.putItem("Bogen", "ein Bogen aus Holz", 0.5);
+        cave.putItem("Schatz", "eine kleine Schatztruhe mit Münzen", 7.5);
+        wizardsRoom.putItem("Pfeile", "Ein Köcher mit diversen Pfeilen", 1.0);
+        jungle.putItem("Pflanze", "eine Heilpflanze", 0.5);
+        jungle.putItem("Kakao", "ein kleiner Kakaobaum", 5);
+        sacrificialSite.putItem("Messer", "ein sehr scharfes, großes Messer", 1);
+        hut.putItem("Speer", "ein Speer mit dazugehöriger Schleuder", 5.0);
+        tavern.putItem("Nahrung", "ein Teller mit deftigem Fleisch und Maisbrei", 0.5);
+        cellar.putItem("Schmuck", "ein sehr hübscher Kopfschmuck", 1);
+
         // initialise room exits
 /*      marketsquare.setExits(tavern, templePyramid, null, sacrificialSite, null, null);
         templePyramid.setExits(null, wizardsRoom, null, marketsquare, hut, cellar);

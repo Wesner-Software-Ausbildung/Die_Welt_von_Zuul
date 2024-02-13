@@ -1,27 +1,15 @@
 package de.szut.zuul;
 import java.util.HashMap;
 
-/**
- * Class Room - a room in an adventure game.
- *
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- *
- * A "Room" represents one location in the scenery of the game.  It is 
- * connected to other rooms via exits.  The exits are labelled north, 
- * east, south, west.  For each direction, the room stores a reference
- * to the neighboring room, or null if there is no exit in that direction.
- * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
- */
 public class Room 
 {
     private String description;
 
 
     // Für die 3 Teil habe ich HashMap in die Klasse "Room" erstellt. Danach soll ich die "Methode" - "getExit" und "exitsToString" ändern.
+    // Fur Teil 6 habe ich die andere HashMap für die Gegenstände (Item), die ich weiter erstellen soll.
     private HashMap<String, Room> exits;
+    private HashMap<String, Item> items;
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,10 +19,12 @@ public class Room
      */
 
     // Für die 3 Teil habe ich den Konstruktor geändert. Er soll jetzt HashMap nutzen.
+    //Für Teil 6 habe ich hier diese HashMap initialisiert.
     public Room(String description) 
     {
         this.description = description;
         this.exits = new HashMap<String, Room>();
+        this.items = new HashMap<String, Item>();
     }
 
     //Ich habe diese Methode erstellt, weil die Attribute in dieser Klasse jetzt "Private" sind. (2 Aufgabe, 1 Schritt)
@@ -48,7 +38,7 @@ public class Room
         StringBuilder exits = new StringBuilder("");
         if(getExit("north") != null)
             exits.append("north ");
-        if(getExit("south ") != null)
+        if(getExit("south") != null)
             exits.append("south ");
         if(getExit("east") != null)
             exits.append("east ");
@@ -61,17 +51,6 @@ public class Room
 
         return exits.toString();
     }
-
-    /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east exit.
-     * @param south The south exit.
-     * @param west The west exit.
-     * @param up The up exit.
-     * @param down The down exit.
-     */
 
     //Ich habe diese Methode ergänzt, weil ich hier ein paar neue Richtungen erstellen wollte (1 Aufgabe)
     //Zum dritten Schritt sollte ich die Methode "setExits" zum "setExit" umwandeln.
@@ -89,7 +68,24 @@ public class Room
     }
 
     //Hier habe ich die Methode "getLongDescription" erstellt, die mir die Beschreibung der Zimmer von der Klasse "Game" zurückgeben. (4 Schritt)
+    //Für 6 Schritt sollte ich diese Methode ändern, um die Gegenstände in der Konsole zu zeigen.
     public String getLongDescription() {
-        return "You are " + description + "\nExits: " + exitsToString();
+
+        StringBuilder itemDescription = new StringBuilder();
+        for (Item item : items.values()) {
+            itemDescription.append("\n- ").append(item.toString());
+        }
+        return "You are " + description + "\nExits: " + exitsToString() + "\nItems in this room: " + itemDescription.toString();
     }
+
+        // Für Teil 6 habe ich "putItem" erstellt, um die Gegenstände von der Klasse "Item" zu bekommen
+        // und die Gegenstände in Raum abgelegt.
+    public void putItem (String name, String description, double weight) {
+        Item newItem = new Item (name, description, weight);
+        this.items.put(name, newItem);
+    }
+
+    //public Item getItem (String itemName) {
+    //    return this.items.get(itemName);
+    //}
 }
