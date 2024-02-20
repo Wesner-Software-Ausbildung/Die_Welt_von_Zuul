@@ -30,9 +30,7 @@ public class Player {
             showStatus();
             return true;
         }
-        else {
-            return false;
-        }
+        return false; //
     }
 
     private double calculateWeight() {

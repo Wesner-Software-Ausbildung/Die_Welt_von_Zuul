@@ -65,10 +65,10 @@ public class Game
         // Für dritte Teil sollte ich Aufruf der Methode "setExist" auf "setExit" ändern, weil die erste Methode nicht meer funktioniert.
         marketsquare.setExit("north", tavern);
         marketsquare.setExit("east", templePyramid);
-        marketsquare.setExit("south", null);
+        // marketsquare.setExit("south", null);
         marketsquare.setExit("west", sacrificialSite);
-        marketsquare.setExit("up", null);
-        marketsquare.setExit("down", null);
+        // marketsquare.setExit("up", null);
+        // marketsquare.setExit("down", null);
 
         templePyramid.setExit("north", hut);
         templePyramid.setExit("east", null);
@@ -294,21 +294,18 @@ public class Game
 
         if (item == null) {
             System.out.println("There is no such item!");
-        }
-        else {
-            boolean success = player.takeItem(item);
-            if (success) {
+        } else {
+            if (player.takeItem(item)) {
                 System.out.println("You took the " + itemName + ".");
                 player.getCurrentRoom().removeItem(itemName);
-            }
-            else {
+            } else {
                 System.out.println("The item is too heavy for you to carry.");
             }
         }
         System.out.println(player.showStatus());
         System.out.println(player.getCurrentRoom().getLongDescription());
     }
-    // Für Teil 7 habe ich die Möglichkeit erstellt, die Gegenstände in den Raum zu bleiben.
+    // Für Teil 7 habe ich die Möglichkeit erstellt, die Gegenstände in den Raum zu legen.
     private void dropItem (Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Drop what? ");
@@ -320,8 +317,7 @@ public class Game
         Item item = player.dropItem(itemName);
             if (item == null) {
                 System.out.println("You don't have such item! ");
-            }
-            else {
+            } else {
                 player.getCurrentRoom().putItem(itemName, item.description, item.getWeight());
                 System.out.println("You dropped the " + itemName + ".");
             }

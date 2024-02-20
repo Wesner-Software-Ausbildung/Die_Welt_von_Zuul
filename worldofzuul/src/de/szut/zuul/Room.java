@@ -35,18 +35,21 @@ public class Room
     //Ich habe diese Methode erstellt, weil die Attribute in dieser Klasse jetzt "Private" sind. (2 Aufgabe, 2 Schritt.)
     //Zum dritten Schritt sollte ich die Methode "exitsToString" ändern.
     public String exitsToString() {
-        StringBuilder exits = new StringBuilder("");
-        if(getExit("north") != null)
+        StringBuilder exits = new StringBuilder();
+        if (getExit("north") != null) {
             exits.append("north ");
-        if(getExit("south") != null)
+        }
+        if (getExit("south") != null) {
             exits.append("south ");
-        if(getExit("east") != null)
+        }
+        if (getExit("east") != null) {
             exits.append("east ");
-        if(getExit("west") != null)
+        }
+        if (getExit("west") != null)
             exits.append("west ");
-        if(getExit("up") != null)
+        if (getExit("up") != null)
             exits.append("up ");
-        if(getExit("down") != null)
+        if (getExit("down") != null)
             exits.append("down ");
 
         return exits.toString();
