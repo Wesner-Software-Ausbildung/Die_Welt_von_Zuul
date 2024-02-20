@@ -19,7 +19,7 @@ public class Room
      */
 
     // Für die 3 Teil habe ich den Konstruktor geändert. Er soll jetzt HashMap nutzen.
-    //Für Teil 6 habe ich hier diese HashMap initialisiert.
+    // Für Teil 6 habe ich hier diese HashMap initialisiert.
     public Room(String description) 
     {
         this.description = description;
@@ -85,7 +85,16 @@ public class Room
         this.items.put(name, newItem);
     }
 
-    //public Item getItem (String itemName) {
-    //    return this.items.get(itemName);
-    //}
+    public Item getItem (String itemName) {
+        return this.items.get(itemName);
+    }
+    // Mit dieser Methode kann ich den Gegenstand aus maine Tasche löschen.
+    public Item removeItem (String name) {
+        if (this.items.containsKey(name)) {
+            return this.items.remove(name);
+        }
+        else {
+            return null;
+        }
+    }
 }

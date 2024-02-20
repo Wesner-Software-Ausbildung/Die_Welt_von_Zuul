@@ -1,32 +1,17 @@
 package de.szut.zuul;
 
-/**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
- * 
- *  To play this game, create an instance of this class and call the "play"
- *  method.
- * 
- *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
- * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
- */
-
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
+
         
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
+        player = new Player();
         createRooms();
         parser = new Parser();
     }
@@ -155,7 +140,7 @@ public class Game
         wizardsRoom.setExit("up", null);
         wizardsRoom.setExit("down", templePyramid);
 
-        currentRoom = marketsquare;  // start game on marketsquare
+        player.goTo(marketsquare);  // start game on marketsquare
     }
 
     /**
@@ -219,6 +204,13 @@ public class Game
         else if (commandWord.equals("look")) {
             look();
         }
+        else if (commandWord.equals("take")) {
+            takeItem(command);
+        }
+        else if (commandWord.equals("drop")) {
+            dropItem(command);
+
+        }
 
         return wantToQuit;
     }
@@ -255,19 +247,19 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
+        Room nextRoom = player.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
-            currentRoom = nextRoom;
+            player.goTo(nextRoom);
             printRoomInformation();
         }
     }
         //(Teil 4) Hier
     private void printRoomInformation() {
-        System.out.println (currentRoom.getLongDescription());
+        System.out.println (player.getCurrentRoom().getLongDescription());
     }
 
     /** 
@@ -288,6 +280,53 @@ public class Game
 
     //In Teil 5 habe ich die Methode "look" geschrieben, um die "description" aus der Klasse Room aufzurufen.
     private void look() {
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getCurrentRoom().getLongDescription());
+    }
+    // Für Teil 7 habe ich die Möglichkeit erstellt, die Gegenstände mitzunehmen. Hier habe ich verschiedene Möglichkeiten beschreiben.
+    private void takeItem (Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Take what?");
+            return;
+        }
+        String itemName = command.getSecondWord();
+
+        Item item = player.getCurrentRoom().getItem(itemName);
+
+        if (item == null) {
+            System.out.println("There is no such item!");
+        }
+        else {
+            boolean success = player.takeItem(item);
+            if (success) {
+                System.out.println("You took the " + itemName + ".");
+                player.getCurrentRoom().removeItem(itemName);
+            }
+            else {
+                System.out.println("The item is too heavy for you to carry.");
+            }
+        }
+        System.out.println(player.showStatus());
+        System.out.println(player.getCurrentRoom().getLongDescription());
+    }
+    // Für Teil 7 habe ich die Möglichkeit erstellt, die Gegenstände in den Raum zu bleiben.
+    private void dropItem (Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Drop what? ");
+            return;
+        }
+
+        String itemName = command.getSecondWord();
+
+        Item item = player.dropItem(itemName);
+            if (item == null) {
+                System.out.println("You don't have such item! ");
+            }
+            else {
+                player.getCurrentRoom().putItem(itemName, item.description, item.getWeight());
+                System.out.println("You dropped the " + itemName + ".");
+            }
+
+            System.out.println(player.showStatus());
+            System.out.println(player.getCurrentRoom().getLongDescription());
     }
 }

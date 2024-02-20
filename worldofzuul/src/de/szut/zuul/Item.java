@@ -20,5 +20,11 @@ public class Item {
         return this.name + ", " + this.description + ", " + this.weight;
     }
 
+    public double getWeight() {
+        return this.weight;
+    }
 
+    public String getName() {
+        return name;
+    }
 }

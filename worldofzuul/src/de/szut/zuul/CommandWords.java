@@ -14,8 +14,9 @@ package de.szut.zuul;
 public class CommandWords
 {
     // a constant array that holds all valid command words
+    // Für Teil 7 habe ich ein Paar neue Kommands erstellt.
     private static final String[] validCommands = {
-        "go", "quit", "help", "look"
+        "go", "quit", "help", "look", "take", "drop"
     };
 
     /**
