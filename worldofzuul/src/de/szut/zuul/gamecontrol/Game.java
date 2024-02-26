@@ -1,6 +1,12 @@
-package de.szut.zuul;
+package de.szut.zuul.gamecontrol;
 
-public class Game 
+import de.szut.zuul.model.Item;
+import de.szut.zuul.model.Player;
+import de.szut.zuul.model.Room;
+import de.szut.zuul.exceptions.ItemNotFoundException;
+import de.szut.zuul.exceptions.ItemTooHeavyException;
+
+public class Game
 {
     private Parser parser;
     private Player player;
@@ -48,96 +54,40 @@ public class Game
         tavern.putItem("Nahrung", "ein Teller mit deftigem Fleisch und Maisbrei", 0.5);
         cellar.putItem("Schmuck", "ein sehr hübscher Kopfschmuck", 1);
 
-        // initialise room exits
-/*      marketsquare.setExits(tavern, templePyramid, null, sacrificialSite, null, null);
-        templePyramid.setExits(null, wizardsRoom, null, marketsquare, hut, cellar);
-        tavern.setExits(null, hut, marketsquare, null, null, null);
-        sacrificialSite.setExits(null, marketsquare, null, null, null, cave);
-        hut.setExits(null, jungle, templePyramid, tavern, null, null);
-        jungle.setExits(null, null, null, hut, null, null);
-        secretPassage.setExits(null, cellar, null, cave, null, null);
-        cave.setExits(null, secretPassage, beach, null, sacrificialSite, null);
-        beach.setExits(cave, null, null, null, null, null);
-        //Ich habe hier Richtungen erstellt.
-        cellar.setExits(null, null, null, secretPassage, templePyramid, null);
-        wizardsRoom.setExits(null, null, null, null, null, templePyramid);*/
-
         // Für dritte Teil sollte ich Aufruf der Methode "setExist" auf "setExit" ändern, weil die erste Methode nicht meer funktioniert.
         marketsquare.setExit("north", tavern);
         marketsquare.setExit("east", templePyramid);
-        // marketsquare.setExit("south", null);
         marketsquare.setExit("west", sacrificialSite);
-        // marketsquare.setExit("up", null);
-        // marketsquare.setExit("down", null);
 
         templePyramid.setExit("north", hut);
-        templePyramid.setExit("east", null);
-        templePyramid.setExit("south", null);
         templePyramid.setExit("west", marketsquare);
         templePyramid.setExit("up", wizardsRoom);
         templePyramid.setExit("down", cellar);
 
-        tavern.setExit("north", null);
         tavern.setExit("east", hut);
         tavern.setExit("south", marketsquare);
-        tavern.setExit("west", null);
-        tavern.setExit("up", null);
-        tavern.setExit("down", null);
 
-        sacrificialSite.setExit("north", null);
         sacrificialSite.setExit("east", marketsquare);
-        sacrificialSite.setExit("south", null);
-        sacrificialSite.setExit("west", null);
-        sacrificialSite.setExit("up", null);
         sacrificialSite.setExit("down", cave);
 
-        hut.setExit("north", null);
         hut.setExit("east", jungle);
         hut.setExit("south", templePyramid);
         hut.setExit("west", tavern);
-        hut.setExit("up", null);
-        hut.setExit("down", null);
 
-        jungle.setExit("north", null);
-        jungle.setExit("east", null);
-        jungle.setExit("south", null);
         jungle.setExit("west", hut);
-        jungle.setExit("up", null);
-        jungle.setExit("down", null);
 
-        secretPassage.setExit("north", null);
         secretPassage.setExit("east", cellar);
-        secretPassage.setExit("south", null);
         secretPassage.setExit("west", cave);
-        secretPassage.setExit("up", null);
-        secretPassage.setExit("down", null);
 
-        cave.setExit("north", null);
         cave.setExit("east", secretPassage);
         cave.setExit("south", beach);
-        cave.setExit("west", null);
         cave.setExit("up", sacrificialSite);
-        cave.setExit("down", null);
 
         beach.setExit("north", cave);
-        beach.setExit("east", null);
-        beach.setExit("south", null);
-        beach.setExit("west", null);
-        beach.setExit("up", null);
-        beach.setExit("down", null);
 
-        cellar.setExit("north", null);
-        cellar.setExit("east", null);
-        cellar.setExit("south", null);
         cellar.setExit("west", secretPassage);
         cellar.setExit("up", templePyramid);
-        cellar.setExit("down", null);
 
-        wizardsRoom.setExit("north", null);
-        wizardsRoom.setExit("east", null);
-        wizardsRoom.setExit("south", null);
-        wizardsRoom.setExit("west", null);
-        wizardsRoom.setExit("up", null);
         wizardsRoom.setExit("down", templePyramid);
 
         player.goTo(marketsquare);  // start game on marketsquare
@@ -146,7 +96,7 @@ public class Game
     /**
      *  Main play routine.  Loops until end of play.
      */
-    public void play() 
+    public void play() throws ItemNotFoundException, ItemTooHeavyException
     {            
         printWelcome();
 
@@ -182,7 +132,7 @@ public class Game
 
     // Für Teil 5 sollte ich das Command "look" hinzufügen, um der Beschreibung des Rooms noch mal ansehen zu können.
     // Und einfach das neue Command zu sehen.
-    private boolean processCommand(Command command) 
+    private boolean processCommand(Command command) throws ItemNotFoundException, ItemTooHeavyException
     {
         boolean wantToQuit = false;
 
@@ -283,7 +233,7 @@ public class Game
         System.out.println(player.getCurrentRoom().getLongDescription());
     }
     // Für Teil 7 habe ich die Möglichkeit erstellt, die Gegenstände mitzunehmen. Hier habe ich verschiedene Möglichkeiten beschreiben.
-    private void takeItem (Command command) {
+    private void takeItem (Command command) throws ItemNotFoundException, ItemTooHeavyException {
         if (!command.hasSecondWord()) {
             System.out.println("Take what?");
             return;
@@ -293,20 +243,23 @@ public class Game
         Item item = player.getCurrentRoom().getItem(itemName);
 
         if (item == null) {
-            System.out.println("There is no such item!");
+            throw new ItemNotFoundException("There is no item like this");
         } else {
-            if (player.takeItem(item)) {
-                System.out.println("You took the " + itemName + ".");
+            try {
                 player.getCurrentRoom().removeItem(itemName);
-            } else {
-                System.out.println("The item is too heavy for you to carry.");
+                player.takeItem(item);
+                System.out.println("You took the item!");
+            } catch (ItemTooHeavyException e) {
+                System.out.println(e.getMessage());
             }
         }
         System.out.println(player.showStatus());
         System.out.println(player.getCurrentRoom().getLongDescription());
     }
+
+
     // Für Teil 7 habe ich die Möglichkeit erstellt, die Gegenstände in den Raum zu legen.
-    private void dropItem (Command command) {
+    private void dropItem (Command command) throws ItemNotFoundException {
         if (!command.hasSecondWord()) {
             System.out.println("Drop what? ");
             return;
@@ -314,14 +267,13 @@ public class Game
 
         String itemName = command.getSecondWord();
 
-        Item item = player.dropItem(itemName);
-            if (item == null) {
-                System.out.println("You don't have such item! ");
-            } else {
-                player.getCurrentRoom().putItem(itemName, item.description, item.getWeight());
-                System.out.println("You dropped the " + itemName + ".");
-            }
-
+        try {
+            Item item = player.dropItem(itemName);
+            player.getCurrentRoom().putItem(itemName, item.description, item.getWeight());
+            System.out.println("You dropped the " + itemName + ".");
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
             System.out.println(player.showStatus());
             System.out.println(player.getCurrentRoom().getLongDescription());
     }

@@ -1,4 +1,7 @@
-package de.szut.zuul;
+package de.szut.zuul.model;
+
+import de.szut.zuul.exceptions.ItemNotFoundException;
+import de.szut.zuul.exceptions.ItemTooHeavyException;
 
 import java.util.LinkedList;
 
@@ -24,14 +27,13 @@ public class Player {
     }
     // In Teil 7 habe ich die Möglichkeit gemacht, die Gegenstände aufheben und lassen. Zuerst habe ich alles in die Methode "takeItem" erstellt,
     // aber später sollte ich diese Methode auf 2 Methode teilen - "calculateWeight" und "isTakePossible".
-    public boolean takeItem (Item item) {
-        if (this.isTakePossible(item)) {
-            this.items.add(item);
-            showStatus();
-            return true;
+    public void takeItem (Item item) throws ItemTooHeavyException {
+        if (item.getWeight() + calculateWeight() > this.loadCapacity) {
+            throw new ItemTooHeavyException("The item is too heavy for you to carry.");
         }
-        return false; //
+        items.add(item);
     }
+
 
     private double calculateWeight() {
         double totalWeight = 0.0;
@@ -42,11 +44,12 @@ public class Player {
     }
 
     private boolean isTakePossible(Item item) {
-        return item.getWeight() + this.calculateWeight() <= this.loadCapacity;
+
+         return item.getWeight() + this.calculateWeight() <= this.loadCapacity;
     }
 
     // In Teil 7 habe ich die Möglichkeit erstellt, um der Gegenstand in Raum zu lassen.
-    public Item dropItem (String name) {
+    public Item dropItem (String name) throws ItemNotFoundException {
         for (Item item : this.items) {
             if (item.getName().equals(name)) {
                this.items.remove(item);
@@ -54,7 +57,7 @@ public class Player {
                 return item;
             }
         }
-            return null;
+        throw new ItemNotFoundException("You don't own this item!");
     }
     // Für Teil 7 habe ich die Methode "showStatus" erstellt, um den Status wahrend des Spiels zu sehen.
     public String showStatus() {

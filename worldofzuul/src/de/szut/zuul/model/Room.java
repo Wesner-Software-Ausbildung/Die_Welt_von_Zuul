@@ -1,4 +1,6 @@
-package de.szut.zuul;
+package de.szut.zuul.model;
+import de.szut.zuul.exceptions.ItemNotFoundException;
+
 import java.util.HashMap;
 
 public class Room 
@@ -45,12 +47,15 @@ public class Room
         if (getExit("east") != null) {
             exits.append("east ");
         }
-        if (getExit("west") != null)
+        if (getExit("west") != null) {
             exits.append("west ");
-        if (getExit("up") != null)
+        }
+        if (getExit("up") != null) {
             exits.append("up ");
-        if (getExit("down") != null)
+        }
+        if (getExit("down") != null) {
             exits.append("down ");
+        }
 
         return exits.toString();
     }
@@ -92,12 +97,11 @@ public class Room
         return this.items.get(itemName);
     }
     // Mit dieser Methode kann ich den Gegenstand aus maine Tasche löschen.
-    public Item removeItem (String name) {
-        if (this.items.containsKey(name)) {
-            return this.items.remove(name);
-        }
-        else {
-            return null;
+    public Item removeItem (String item) throws ItemNotFoundException {
+        try {
+            return this.items.remove(item);
+        } catch (Exception e) {
+            throw new ItemNotFoundException(item + " does not exist!");
         }
     }
 }

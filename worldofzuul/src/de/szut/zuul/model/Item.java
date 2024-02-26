@@ -1,4 +1,4 @@
-package de.szut.zuul;
+package de.szut.zuul.model;
 import java.util.HashMap;
 
 public class Item {
